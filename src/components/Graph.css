@@ -1,0 +1,17 @@
+.graph {
+  border: 1px solid black;
+  width: 50%;
+  height: 35vh;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: baseline;
+}
+.graph div {
+  writing-mode: tb-rl;
+  transform: rotate(-180deg);
+  background-color: blue;
+  overflow: visible;
+  white-space: nowrap;
+}

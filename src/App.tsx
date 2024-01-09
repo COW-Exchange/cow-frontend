@@ -10,42 +10,30 @@ function App() {
   useEffect(() => {
     axios
       .get(url)
-      .then(
-        (result) => {
-          setDisplay(
-            <div>
-              {Object.keys(result.data.rates[0].rates).map((key) =>
-                key !== "_id" ? (
-                  <Graph
-                    currency={key}
-                    dateRates={result.data.rates.map(
-                      (item: { date: string; rates: {} }) => {
-                        return {
-                          date: item.date,
-                          rate: item.rates[key as keyof typeof item.rates],
-                        };
-                      }
-                    )}
-                  />
-                ) : (
-                  <span></span>
-                )
-              )}
-            </div>
-          );
-        }
-        // result.data.rates.map((item: { date: any; rates: any }) => (
-        //   <div>
-        //     <p>{item.date}</p>
-
-        //     {Object.keys(item.rates).map((key) => (
-        //       <p>
-        //         {key}:{item.rates[key]}
-        //       </p>
-        //     ))}
-        //   </div>
-        // ))
-      )
+      .then((result) => {
+        setDisplay(
+          <div>
+            {Object.keys(result.data.rates[0].rates).map((key) =>
+              key == "_id" || key == "HRK" || key == "RUB" ? (
+                <span key={key}></span>
+              ) : (
+                <Graph
+                  key={key}
+                  currency={key}
+                  dateRates={result.data.rates.map(
+                    (item: { date: string; rates: {} }) => {
+                      return {
+                        date: item.date,
+                        rate: item.rates[key as keyof typeof item.rates],
+                      };
+                    }
+                  )}
+                />
+              )
+            )}
+          </div>
+        );
+      })
       .catch((error) => {
         console.error(error);
         throw error;
@@ -56,8 +44,7 @@ function App() {
   return (
     <div>
       COW Exchange
-      {loading}
-      {display}
+      {loading ? "loading" : display}
     </div>
   );
 }
