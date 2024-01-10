@@ -1,17 +1,57 @@
+@media (min-width: 999px) {
+  .graph {
+    width: 50%;
+  }
+}
+@media (max-width: 999px) {
+  .date {
+    display: none;
+  }
+}
 .graph {
   border: 1px solid black;
-  width: 50%;
   height: 35vh;
-  padding: 10px;
+  padding: 30px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: baseline;
+  background-color: rgba(107, 186, 251, 0.8);
 }
-.graph div {
-  writing-mode: tb-rl;
-  transform: rotate(-180deg);
-  background-color: blue;
+.column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 20px;
+  position: relative;
+}
+.column-value {
+  width: 100%;
   overflow: visible;
   white-space: nowrap;
+  position: absolute;
+  bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.column-label {
+  overflow: visible;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* white-space: nowrap; */
+  /* text-align: center; */
+  /* width: 100%; */
+  /* transform: rotate(-180deg); */
+}
+.column-label img {
+  width: 100%;
+  bottom: 20px;
+  left: 0;
+}
+.date {
+  /* display: none; */
 }

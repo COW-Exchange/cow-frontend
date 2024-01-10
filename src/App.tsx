@@ -2,6 +2,7 @@ import "./App.css";
 import Graph from "./components/Graph";
 import axios from "axios";
 import { useState, useEffect, ReactElement } from "react";
+import NavBar from "./components/NavBar";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -14,7 +15,7 @@ function App() {
         setDisplay(
           <div>
             {Object.keys(result.data.rates[0].rates).map((key) =>
-              key == "_id" || key == "HRK" || key == "RUB" ? (
+              key === "_id" || key === "HRK" || key === "RUB" ? (
                 <span key={key}></span>
               ) : (
                 <Graph
@@ -42,9 +43,11 @@ function App() {
   }, []);
 
   return (
-    <div>
-      COW Exchange
-      {loading ? "loading" : display}
+    <div className="tile">
+      <div className="main">
+        <NavBar />
+        {loading ? "loading" : display}
+      </div>
     </div>
   );
 }
