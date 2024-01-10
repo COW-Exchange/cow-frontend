@@ -3,6 +3,7 @@ import Graph from "./components/Graph";
 import axios from "axios";
 import { useState, useEffect, ReactElement } from "react";
 import NavBar from "./components/NavBar";
+import Description from "./components/Description";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -18,18 +19,21 @@ function App() {
               key === "_id" || key === "HRK" || key === "RUB" ? (
                 <span key={key}></span>
               ) : (
-                <Graph
-                  key={key}
-                  currency={key}
-                  dateRates={result.data.rates.map(
-                    (item: { date: string; rates: {} }) => {
-                      return {
-                        date: item.date,
-                        rate: item.rates[key as keyof typeof item.rates],
-                      };
-                    }
-                  )}
-                />
+                <div className="container" key={key}>
+                  <Graph
+                    key={key}
+                    currency={key}
+                    dateRates={result.data.rates.map(
+                      (item: { date: string; rates: {} }) => {
+                        return {
+                          date: item.date,
+                          rate: item.rates[key as keyof typeof item.rates],
+                        };
+                      }
+                    )}
+                  />
+                  <Description />
+                </div>
               )
             )}
           </div>

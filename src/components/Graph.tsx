@@ -17,7 +17,7 @@ export default function Graph({ currency, dateRates }: graphProps) {
     }
   });
   return (
-    <div>
+    <div className="graph-container">
       <h2>{currency}</h2>
       <div className="graph">
         {dateRates.map((dayRate) => (
