@@ -10,15 +10,31 @@ light blue
 * {
   text-decoration: none;
 }
-
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+#navbar {
+  display: flex;
+}
 #navbar img {
   width: 10vw;
   padding: 5px;
+  height: auto;
+  object-fit: contain;
+}
+.dropdown {
+  font-size: 2vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
 }
 .tile {
   background-image: url(./images/tile.jpg);
   background-repeat: repeat;
   background-size: contain;
+  height: 100%;
 }
 .main {
   background-image: url(./images/pasture_top.jpg);
@@ -27,8 +43,8 @@ light blue
 }
 .container {
   display: grid;
-  grid-template-columns: auto auto;
-  gap: 5%;
+  grid-template-columns: 40vw 40vw;
+  gap: 10vw;
   margin: 3%;
   width: 94%;
 }
@@ -39,6 +55,9 @@ light blue
 }
 @media (max-width: 999px) {
   .container {
-    grid-template-columns: auto;
+    grid-template-columns: 85vw;
+  }
+  .description {
+    width: 85vw;
   }
 }

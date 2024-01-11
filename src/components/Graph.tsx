@@ -1,11 +1,13 @@
 import "./Graph.css";
 import logo from "../images/cow_logo_01.png";
+import dot from "../images/cow512.png";
 
 type graphProps = {
   currency: string;
   dateRates: { date: string; rate: number }[];
+  timeSelect: string;
 };
-export default function Graph({ currency, dateRates }: graphProps) {
+export default function Graph({ currency, dateRates, timeSelect }: graphProps) {
   let max: number = 0;
   let min: number = 100000;
   dateRates.forEach((day) => {
@@ -28,12 +30,23 @@ export default function Graph({ currency, dateRates }: graphProps) {
                 height:
                   (
                     100 -
-                    (((dayRate.rate - min) / (max - min * 0.99)) * 100 + 10)
+                    (((dayRate.rate - min) / (max - min * 0.995)) * 100 + 10)
                   ).toString() + "%",
               }}
             >
-              <p>{dayRate.rate}</p>
-              <img src={logo} alt="*" key={currency + dayRate.date + "logo"} />
+              <span>{dayRate.rate}</span>
+              <img
+                className={
+                  timeSelect === "week" || timeSelect === "month"
+                    ? "HQdot"
+                    : "dot"
+                }
+                src={
+                  timeSelect === "week" || timeSelect === "month" ? logo : dot
+                }
+                alt="*"
+                key={currency + dayRate.date + "logo"}
+              />
             </div>
 
             <div
@@ -42,7 +55,7 @@ export default function Graph({ currency, dateRates }: graphProps) {
               style={{
                 height:
                   (
-                    ((dayRate.rate - min) / (max - min * 0.99)) * 100 +
+                    ((dayRate.rate - min) / (max - min * 0.995)) * 100 +
                     10
                   ).toString() + "%",
               }}
