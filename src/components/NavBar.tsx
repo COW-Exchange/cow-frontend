@@ -1,4 +1,6 @@
 import logo from "../images/cow_logo_01.png";
+import { sloganArray } from "../texts";
+import { useMemo } from "react";
 
 type navProps = {
   timeframe: { from: string; to: string };
@@ -20,6 +22,11 @@ export default function NavBar({
   timeSelect,
   setTimeSelect,
 }: navProps) {
+  const slogan = useMemo(
+    () => sloganArray[Math.floor(Math.random() * sloganArray.length)],
+    []
+  );
+
   return (
     <div id="navbar">
       <img src={logo} alt="COW Exchange" />
@@ -70,6 +77,9 @@ export default function NavBar({
           <option value="year">year</option>
           <option value="custom">custom</option>
         </select>
+      </div>
+      <div id="slogan">
+        <span>{slogan}</span>
       </div>
     </div>
   );

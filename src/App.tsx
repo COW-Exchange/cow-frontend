@@ -15,23 +15,6 @@ function convertDate(date: Date) {
   ].join("-");
 }
 const url = process.env.REACT_APP_URL;
-// Milk your investments
-// The grass is greener in other currencies
-// Teach a man to COW and you financed him for a lifetime
-// Move your "live"stock for sustainability
-// Have you heard about the tragedy of the commons? Protect our pastures!
-// MUUsic to your wallet
-// Money is not just in THAT type of grass.
-// Money doesn't grow on trees it grows on lush green fields.
-// I don't see you smile. You need some cheeese!
-// We are the MOOsicians of finances.
-// Those rates are MOOving!
-// Why don’t cows have any money? Because farmers milk them dry!
-// How did the beef make its fortune? It “brisket” all!
-// What do you call a cow that can solve complex math problems? A “steak”holder!
-// We wish us all a bullish market!
-// Make loud noises by yelling, banging pots and pans to keep the bear market away!
-// If the bear market comes don't play dead, buy!
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -69,7 +52,7 @@ function App() {
                       }
                     )}
                   />
-                  <Description />
+                  <Description currency={key} />
                 </div>
               )
             )}

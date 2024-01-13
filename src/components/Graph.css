@@ -15,6 +15,12 @@
 }
 .column:hover span {
   display: unset;
+  background-color: rgba(212, 217, 190, 0.8);
+  color: rgba(48, 51, 32, 1);
+  padding: 2px;
+  margin: 2px;
+  font-weight: bold;
+  z-index: 2;
 }
 .column {
   display: flex;
@@ -22,6 +28,7 @@
   height: 100%;
   max-width: 3%;
   position: relative;
+  margin-left: -1vw;
 }
 .column-value {
   width: 100%;
@@ -34,13 +41,13 @@
   justify-content: flex-end;
   align-items: center;
 }
-
 .column-label {
   overflow: visible;
-  position: relative;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+
   /* white-space: nowrap; */
   /* text-align: center; */
   /* width: 100%; */
@@ -50,10 +57,5 @@
   width: 100%;
   bottom: 20px;
   left: 0;
-  min-width: 3px;
-}
-@media (max-width: 999px) {
-  .date {
-    display: none;
-  }
+  /* min-width: 3px; */
 }

@@ -1,10 +1,12 @@
-import React from "react";
+import { currencies, currencyDescriptions } from "../texts";
 
-export default function Description() {
+export default function Description({ currency }: { currency: string }) {
   return (
     <div>
-      <h2>Text</h2>
-      <div className="description">Text</div>
+      <h2>About the {currencies[currency as keyof typeof currencies]}</h2>
+      <div className="description">
+        {currencyDescriptions[currency as keyof typeof currencies]}
+      </div>
     </div>
   );
 }
