@@ -3,11 +3,30 @@ import logo from "../images/cow_logo_01.png";
 import dot from "../images/cow512.png";
 
 type graphProps = {
+  baseCurrency: string;
   currency: string;
   dateRates: { date: string; rate: number }[];
   timeSelect: string;
 };
-export default function Graph({ currency, dateRates, timeSelect }: graphProps) {
+export default function Graph({
+  baseCurrency,
+  currency,
+  dateRates,
+  timeSelect,
+}: graphProps) {
+  function findMedian(arr: number[]) {
+    arr.sort((a, b) => a - b);
+    const middleIndex = Math.floor(arr.length / 2);
+
+    if (arr.length % 2 === 0) {
+      return (arr[middleIndex - 1] + arr[middleIndex]) / 2;
+    } else {
+      return arr[middleIndex];
+    }
+  }
+  function getBaseLog(x: number, y: number) {
+    return Math.log(y) / Math.log(x);
+  }
   let max: number = 0;
   let min: number = 100000;
   dateRates.forEach((day) => {
@@ -18,9 +37,12 @@ export default function Graph({ currency, dateRates, timeSelect }: graphProps) {
       min = day.rate;
     }
   });
+  const median = findMedian(Object.values(dateRates.map((day) => day.rate)));
   return (
     <div className="graph-container">
-      <h2>{currency}</h2>
+      <h2>
+        1 {currency} to {baseCurrency}
+      </h2>
       <div className="graph">
         {dateRates.map((dayRate) => (
           <div className="column" key={currency + dayRate.date}>
@@ -34,7 +56,19 @@ export default function Graph({ currency, dateRates, timeSelect }: graphProps) {
                   ).toString() + "%",
               }}
             >
-              <span>{dayRate.rate}</span>
+              <span className="value">
+                {getBaseLog(10, dayRate.rate) < -2 ? (
+                  <span>
+                    {dayRate.rate.toExponential().toString().slice(0, 6)}{" "}
+                    · 10
+                    <sup>
+                      {dayRate.rate.toExponential().toString().slice(-2)}
+                    </sup>
+                  </span>
+                ) : (
+                  Math.round(dayRate.rate * 100000) / 100000
+                )}
+              </span>
               <img
                 className={
                   timeSelect === "week" || timeSelect === "month"

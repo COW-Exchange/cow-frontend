@@ -13,6 +13,9 @@ type navProps = {
   convertDate: Function;
   timeSelect: string;
   setTimeSelect: React.Dispatch<React.SetStateAction<string>>;
+  baseCurrency: string;
+  setBaseCurrency: React.Dispatch<React.SetStateAction<string>>;
+  currencies: string[] | undefined;
 };
 
 export default function NavBar({
@@ -21,6 +24,9 @@ export default function NavBar({
   convertDate,
   timeSelect,
   setTimeSelect,
+  baseCurrency,
+  setBaseCurrency,
+  currencies,
 }: navProps) {
   const slogan = useMemo(
     () => sloganArray[Math.floor(Math.random() * sloganArray.length)],
@@ -30,7 +36,7 @@ export default function NavBar({
   return (
     <div id="navbar">
       <img src={logo} alt="COW Exchange" />
-      <div className="dropdown">
+      <div className="dropdown" key={"timeframe"}>
         <span>Grazing time:</span>
         <select
           name="timeSelect"
@@ -76,6 +82,23 @@ export default function NavBar({
           <option value="month">month</option>
           <option value="year">year</option>
           <option value="custom">custom</option>
+        </select>
+      </div>
+      <div className="dropdown" key={"currency"}>
+        <span>Base currency: </span>
+        <select
+          name="baseSelect"
+          id="base-select"
+          value={baseCurrency}
+          onChange={(e) => {
+            setBaseCurrency(e.target.value);
+          }}
+        >
+          <option value="EUR">EUR</option>
+
+          {currencies?.map((currency) => (
+            <option value={currency}>{currency}</option>
+          ))}
         </select>
       </div>
       <div id="slogan">

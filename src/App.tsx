@@ -17,6 +17,8 @@ function convertDate(date: Date) {
 const url = process.env.REACT_APP_URL;
 
 function App() {
+  const [exchangeRates, setExchangeRates] = useState<any>();
+  const [currencies, setCurrencies] = useState<string[]>();
   const [loading, setLoading] = useState(true);
   const [display, setDisplay] = useState<ReactElement>();
   const [timeframe, setTimeframe] = useState<{ from: string; to: string }>({
@@ -24,47 +26,70 @@ function App() {
     to: convertDate(new Date()),
   });
   const [timeSelect, setTimeSelect] = useState("week");
+  const [baseCurrency, setBasyCurrency] = useState("EUR");
 
   useEffect(() => {
     axios
       .get(`${url}/exchange-rate/${timeframe.from}/${timeframe.to}/`)
       .then((result) => {
-        setDisplay(
-          <div>
-            {Object.keys(result.data.rates[0].rates).map((key) =>
-              key === "_id" ||
-              key === "HRK" ||
-              key === "RUB" ||
-              key === "BGN" ? (
-                <span key={key}></span>
-              ) : (
-                <div className="container" key={key}>
-                  <Graph
-                    key={key}
-                    currency={key}
-                    timeSelect={timeSelect}
-                    dateRates={result.data.rates.map(
-                      (item: { date: string; rates: {} }) => {
-                        return {
-                          date: item.date,
-                          rate: item.rates[key as keyof typeof item.rates],
-                        };
-                      }
-                    )}
-                  />
-                  <Description currency={key} />
-                </div>
-              )
-            )}
-          </div>
-        );
+        setExchangeRates(result.data.rates);
       })
       .catch((error) => {
         console.error(error);
         throw error;
       });
     setLoading(false);
-  }, [timeframe, timeSelect]);
+  }, [timeframe]);
+
+  useEffect(() => {
+    if (exchangeRates) {
+      setCurrencies(
+        Object.keys(exchangeRates[0].rates).filter(
+          (currency) =>
+            currency !== "_id" &&
+            currency !== "HRK" &&
+            currency !== "RUB" &&
+            currency !== "BGN"
+        )
+      );
+      setDisplay(
+        <div>
+          {Object.keys(exchangeRates[0].rates).map((key) =>
+            key === "_id" ||
+            key === "HRK" ||
+            key === "RUB" ||
+            key === "BGN" ||
+            key === baseCurrency ? (
+              <span key={key}></span>
+            ) : (
+              <div className="container" key={key}>
+                <Graph
+                  key={key}
+                  baseCurrency={baseCurrency}
+                  currency={key}
+                  timeSelect={timeSelect}
+                  dateRates={exchangeRates.map(
+                    (item: { date: string; rates: {} }) => {
+                      return {
+                        date: item.date,
+                        rate:
+                          baseCurrency === "EUR"
+                            ? 1 / item.rates[key as keyof typeof item.rates]
+                            : item.rates[
+                                baseCurrency as keyof typeof item.rates
+                              ] / item.rates[key as keyof typeof item.rates],
+                      };
+                    }
+                  )}
+                />
+                <Description currency={key} />
+              </div>
+            )
+          )}
+        </div>
+      );
+    }
+  }, [exchangeRates, baseCurrency, timeSelect]);
 
   return (
     <div className="tile">
@@ -75,6 +100,9 @@ function App() {
           convertDate={convertDate}
           timeSelect={timeSelect}
           setTimeSelect={setTimeSelect}
+          baseCurrency={baseCurrency}
+          setBaseCurrency={setBasyCurrency}
+          currencies={currencies}
         />
         {loading ? "loading" : display}
       </div>
