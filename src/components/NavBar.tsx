@@ -68,14 +68,6 @@ export default function NavBar({
                 to: convertDate(new Date()),
               });
             }
-            if (e.target.value === "custom") {
-              setTimeframe({
-                from: convertDate(
-                  new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
-                ),
-                to: convertDate(new Date()),
-              });
-            }
           }}
         >
           <option value="week">week</option>
@@ -83,9 +75,51 @@ export default function NavBar({
           <option value="year">year</option>
           <option value="custom">custom</option>
         </select>
+        {timeSelect === "custom" ? (
+          <div>
+            <p>
+              from:{" "}
+              <input
+                type="date"
+                value={timeframe.from}
+                onChange={(e) => {
+                  if (new Date(e.target.value) < new Date(timeframe.to)) {
+                    setTimeframe({
+                      ...timeframe,
+                      from: e.target.value.toString(),
+                    });
+                  } else {
+                    alert("Beginnings are ment to be before endings.");
+                  }
+                }}
+              ></input>
+            </p>
+            <p>
+              to:{" "}
+              <input
+                type="date"
+                value={timeframe.to}
+                onChange={(e) => {
+                  if (new Date(e.target.value) < new Date()) {
+                    setTimeframe({
+                      ...timeframe,
+                      to: e.target.value.toString(),
+                    });
+                  } else {
+                    alert(
+                      "Although we would very much like to, we can't see into the future."
+                    );
+                  }
+                }}
+              ></input>
+            </p>
+          </div>
+        ) : (
+          <span></span>
+        )}
       </div>
       <div className="dropdown" key={"currency"}>
-        <span>Base currency: </span>
+        <span key={"base"}>Base currency: </span>
         <select
           name="baseSelect"
           id="base-select"
@@ -97,11 +131,13 @@ export default function NavBar({
           <option value="EUR">EUR</option>
 
           {currencies?.map((currency) => (
-            <option value={currency}>{currency}</option>
+            <option value={currency} key={currency}>
+              {currency}
+            </option>
           ))}
         </select>
       </div>
-      <div id="slogan">
+      <div id="slogan" key={"slogan"}>
         <span>{slogan}</span>
       </div>
     </div>

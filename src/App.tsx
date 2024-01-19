@@ -37,8 +37,8 @@ function App() {
       .catch((error) => {
         console.error(error);
         throw error;
-      });
-    setLoading(false);
+      })
+      .finally(() => setLoading(false));
   }, [timeframe]);
 
   useEffect(() => {
@@ -92,8 +92,8 @@ function App() {
   }, [exchangeRates, baseCurrency, timeSelect]);
 
   return (
-    <div className="tile">
-      <div className="main">
+    <div className="tile" key={"tile"}>
+      <div className="main" key={"main"}>
         <NavBar
           timeframe={timeframe}
           setTimeframe={setTimeframe}
@@ -104,7 +104,7 @@ function App() {
           setBaseCurrency={setBasyCurrency}
           currencies={currencies}
         />
-        {loading ? "loading" : display}
+        {loading ? <p>loading</p> : display}
       </div>
     </div>
   );

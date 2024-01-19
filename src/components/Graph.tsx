@@ -38,12 +38,57 @@ export default function Graph({
     }
   });
   const median = findMedian(Object.values(dateRates.map((day) => day.rate)));
+  const maxPercent = (max / median) * 100 - 100;
+  const minPercent = ((min / median) * 100 - 100) * -1;
+  const minFloor = (-1 * Math.floor(minPercent * 10)) / 10;
+  const maxFloor = Math.floor(maxPercent * 10) / 10;
+  console.log(currency, maxPercent, minPercent, minFloor, maxFloor);
   return (
     <div className="graph-container">
-      <h2>
-        1 {currency} to {baseCurrency}
-      </h2>
+      <h2>{currency}</h2>
       <div className="graph">
+        {minFloor !== 0 ? (
+          <div
+            className="relative underline median"
+            style={{
+              bottom:
+                (
+                  5 +
+                  ((median + (median * minFloor) / 100 - min) / (max - min)) *
+                    90
+                ).toString() + "%",
+            }}
+          >
+            {minFloor}%
+          </div>
+        ) : (
+          ""
+        )}
+        {maxFloor !== 0 ? (
+          <div
+            className="relative underline median"
+            style={{
+              bottom:
+                (
+                  5 +
+                  ((median + (median * maxFloor) / 100 - min) / (max - min)) *
+                    90
+                ).toString() + "%",
+            }}
+          >
+            {maxFloor}%
+          </div>
+        ) : (
+          ""
+        )}
+        <div
+          className="relative underline median"
+          style={{
+            bottom: (5 + ((median - min) / (max - min)) * 90).toString() + "%",
+          }}
+        >
+          M
+        </div>
         {dateRates.map((dayRate) => (
           <div className="column" key={currency + dayRate.date}>
             <div
@@ -52,22 +97,22 @@ export default function Graph({
                 height:
                   (
                     100 -
-                    (((dayRate.rate - min) / (max - min * 0.995)) * 100 + 10)
+                    ((dayRate.rate - min) / (max - min)) * 100
                   ).toString() + "%",
               }}
             >
               <span className="value">
                 {getBaseLog(10, dayRate.rate) < -2 ? (
                   <span>
-                    {dayRate.rate.toExponential().toString().slice(0, 6)}{" "}
-                    · 10
+                    {dayRate.rate.toExponential().toString().slice(0, 6)} · 10
                     <sup>
                       {dayRate.rate.toExponential().toString().slice(-2)}
                     </sup>
                   </span>
                 ) : (
                   Math.round(dayRate.rate * 100000) / 100000
-                )}
+                )}{" "}
+                {baseCurrency}
               </span>
               <img
                 className={
@@ -88,16 +133,20 @@ export default function Graph({
               key={currency + dayRate.date + "value"}
               style={{
                 height:
-                  (
-                    ((dayRate.rate - min) / (max - min * 0.995)) * 100 +
-                    10
-                  ).toString() + "%",
+                  (((dayRate.rate - min) / (max - min)) * 100).toString() + "%",
               }}
             >
               <span className="date">{dayRate.date.slice(0, 10)}</span>
             </div>
           </div>
         ))}
+        <div className="legend-container">
+          <div className="relative-legend-container">
+            <span className="legend">
+              M={Math.round(median * 100000) / 100000}
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

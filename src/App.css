@@ -41,8 +41,8 @@ body {
 .main {
   background-image: url(./images/pasture_top.jpg);
   background-repeat: no-repeat;
-  background-size: contain;
-  min-width: 100%;
+  background-size: 100vw;
+  width: 100%;
 }
 .container {
   display: grid;
