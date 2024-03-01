@@ -42,7 +42,6 @@ export default function Graph({
   const minPercent = ((min / median) * 100 - 100) * -1;
   const minFloor = (-1 * Math.floor(minPercent * 10)) / 10;
   const maxFloor = Math.floor(maxPercent * 10) / 10;
-  console.log(currency, maxPercent, minPercent, minFloor, maxFloor);
   return (
     <div className="graph-container">
       <h2>{currency}</h2>
