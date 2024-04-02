@@ -37,7 +37,9 @@ export default function NavBar({
 
   return (
     <div id="navbar">
-      <img src={logo} alt="COW Exchange" />
+      <a href="/">
+        <img src={logo} alt="COW Exchange" />
+      </a>
       <div className="dropdown" key={"timeframe"}>
         <span>Grazing time:</span>
         <select
@@ -154,6 +156,8 @@ export default function NavBar({
         >
           <a href="/">Home</a>
           <a href="/privacy">Privacy</a>
+          <a href="/register">Register</a>
+          <a href="/login">Log in</a>
         </div>
       </div>
     </div>
