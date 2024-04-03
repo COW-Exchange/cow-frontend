@@ -1,6 +1,7 @@
 import logo from "../images/cow_logo_01.png";
 import { sloganArray } from "../texts";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { DiGhostSmall } from "react-icons/di";
 
 type navProps = {
   timeframe: { from: string; to: string };
@@ -28,6 +29,7 @@ export default function NavBar({
   setBaseCurrency,
   currencies,
 }: navProps) {
+  const [menuOpen, setMenuOpen] = useState<Boolean>(false);
   const slogan = useMemo(
     () => sloganArray[Math.floor(Math.random() * sloganArray.length)],
     []
@@ -35,7 +37,9 @@ export default function NavBar({
 
   return (
     <div id="navbar">
-      <img src={logo} alt="COW Exchange" />
+      <a href="/">
+        <img src={logo} alt="COW Exchange" />
+      </a>
       <div className="dropdown" key={"timeframe"}>
         <span>Grazing time:</span>
         <select
@@ -139,6 +143,22 @@ export default function NavBar({
       </div>
       <div id="slogan" key={"slogan"}>
         <span>{slogan}</span>
+      </div>
+      <div
+        id="menu"
+        onMouseOver={() => setMenuOpen(true)}
+        onMouseLeave={() => setMenuOpen(false)}
+      >
+        <DiGhostSmall className="menuicon" />
+        <div
+          className="menudropdown"
+          style={{ display: menuOpen ? "" : "none" }}
+        >
+          <a href="/">Home</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/register">Register</a>
+          <a href="/login">Log in</a>
+        </div>
       </div>
     </div>
   );
