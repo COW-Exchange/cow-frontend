@@ -59,11 +59,17 @@ body {
   padding: 5%;
   margin-top: 7vh;
   height: 35vh;
+  overflow: hidden;
 }
 .description h2 {
   padding: 0;
   margin: 0;
   margin-bottom: 2%;
+}
+.description p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 #slogan {
   display: flex;
@@ -77,9 +83,8 @@ body {
   overflow: visible;
 }
 .menuicon {
-  font-size: 5vw;
-  position: relative;
-  display: block;
+  font-size: 4vw;
+  margin: 2vw;
 }
 .menuicon:hover {
   color: rgb(48, 51, 32);
@@ -118,6 +123,12 @@ body {
   align-items: center;
   justify-content: space-around;
 }
+.form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
 .inputfield {
   width: 75%;
   margin: 1vw;
@@ -128,8 +139,29 @@ body {
   }
   .description {
     width: 85vw;
+    height: auto;
   }
   .menuicon {
     font-size: 7vh;
+  }
+}
+@media (max-height: 900px) {
+  .description p {
+    -webkit-line-clamp: 9;
+  }
+}
+@media (max-height: 700px) {
+  .description p {
+    -webkit-line-clamp: 7;
+  }
+}
+@media (max-height: 500px) {
+  .description p {
+    -webkit-line-clamp: 4;
+  }
+}
+@media (max-height: 300px) {
+  .description p {
+    -webkit-line-clamp: 2;
   }
 }

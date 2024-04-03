@@ -87,7 +87,7 @@ export default function Register() {
         });
     } else {
       setDisplay(
-        <div>
+        <div className="formbox">
           <input
             type="email"
             id="email"

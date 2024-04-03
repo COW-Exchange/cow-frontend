@@ -1,8 +1,9 @@
 import logo from "../images/cow_logo_01.png";
 import { sloganArray } from "../texts";
 import { useMemo, useState } from "react";
-import { DiGhostSmall } from "react-icons/di";
-
+import { FiMoreVertical } from "react-icons/fi";
+import { useLocation } from "react-router-dom";
+import Dropdowns from "./Dropdowns";
 type navProps = {
   timeframe: { from: string; to: string };
   setTimeframe: React.Dispatch<
@@ -40,107 +41,21 @@ export default function NavBar({
       <a href="/">
         <img src={logo} alt="COW Exchange" />
       </a>
-      <div className="dropdown" key={"timeframe"}>
-        <span>Grazing time:</span>
-        <select
-          name="timeSelect"
-          id="time-select"
-          value={timeSelect}
-          onChange={(e) => {
-            setTimeSelect(e.target.value);
-            if (e.target.value === "week") {
-              setTimeframe({
-                from: convertDate(
-                  new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
-                ),
-                to: convertDate(new Date()),
-              });
-            }
-            if (e.target.value === "month") {
-              setTimeframe({
-                from: convertDate(
-                  new Date(new Date().getTime() - 60 * 60 * 24 * 30 * 1000)
-                ),
-                to: convertDate(new Date()),
-              });
-            }
-            if (e.target.value === "year") {
-              setTimeframe({
-                from: convertDate(
-                  new Date(new Date().getTime() - 60 * 60 * 24 * 365 * 1000)
-                ),
-                to: convertDate(new Date()),
-              });
-            }
-          }}
-        >
-          <option value="week">week</option>
-          <option value="month">month</option>
-          <option value="year">year</option>
-          <option value="custom">custom</option>
-        </select>
-        {timeSelect === "custom" ? (
-          <div>
-            <p>
-              from:{" "}
-              <input
-                type="date"
-                value={timeframe.from}
-                onChange={(e) => {
-                  if (new Date(e.target.value) < new Date(timeframe.to)) {
-                    setTimeframe({
-                      ...timeframe,
-                      from: e.target.value.toString(),
-                    });
-                  } else {
-                    alert("Beginnings are ment to be before endings.");
-                  }
-                }}
-              ></input>
-            </p>
-            <p>
-              to:{" "}
-              <input
-                type="date"
-                value={timeframe.to}
-                onChange={(e) => {
-                  if (new Date(e.target.value) < new Date()) {
-                    setTimeframe({
-                      ...timeframe,
-                      to: e.target.value.toString(),
-                    });
-                  } else {
-                    alert(
-                      "Although we would very much like to, we can't see into the future."
-                    );
-                  }
-                }}
-              ></input>
-            </p>
-          </div>
-        ) : (
-          <span></span>
-        )}
-      </div>
-      <div className="dropdown" key={"currency"}>
-        <span key={"base"}>Base currency: </span>
-        <select
-          name="baseSelect"
-          id="base-select"
-          value={baseCurrency}
-          onChange={(e) => {
-            setBaseCurrency(e.target.value);
-          }}
-        >
-          <option value="EUR">EUR</option>
+      {useLocation().pathname === "/" ? (
+        <Dropdowns
+          timeframe={timeframe}
+          setTimeframe={setTimeframe}
+          convertDate={convertDate}
+          timeSelect={timeSelect}
+          setTimeSelect={setTimeSelect}
+          baseCurrency={baseCurrency}
+          setBaseCurrency={setBaseCurrency}
+          currencies={currencies}
+        />
+      ) : (
+        ""
+      )}
 
-          {currencies?.map((currency) => (
-            <option value={currency} key={currency}>
-              {currency}
-            </option>
-          ))}
-        </select>
-      </div>
       <div id="slogan" key={"slogan"}>
         <span>{slogan}</span>
       </div>
@@ -149,7 +64,7 @@ export default function NavBar({
         onMouseOver={() => setMenuOpen(true)}
         onMouseLeave={() => setMenuOpen(false)}
       >
-        <DiGhostSmall className="menuicon" />
+        <FiMoreVertical className="menuicon" />
         <div
           className="menudropdown"
           style={{ display: menuOpen ? "" : "none" }}

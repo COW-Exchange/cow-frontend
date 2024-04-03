@@ -5,7 +5,7 @@ export default function Description({ currency }: { currency: string }) {
     <div>
       <div className="description">
         <h2>About the {currencies[currency as keyof typeof currencies]}</h2>
-        {currencyDescriptions[currency as keyof typeof currencies]}
+        <p>{currencyDescriptions[currency as keyof typeof currencies]}</p>
       </div>
     </div>
   );

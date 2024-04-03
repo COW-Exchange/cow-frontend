@@ -22,10 +22,12 @@ function convertDate(date: Date) {
 function App() {
   const [currencies, setCurrencies] = useState<string[]>();
   const [timeframe, setTimeframe] = useState<{ from: string; to: string }>({
-    from: convertDate(new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)),
+    from: convertDate(
+      new Date(new Date().getTime() - 60 * 60 * 24 * 30 * 1000)
+    ),
     to: convertDate(new Date()),
   });
-  const [timeSelect, setTimeSelect] = useState("week");
+  const [timeSelect, setTimeSelect] = useState("month");
   const [baseCurrency, setBaseCurrency] = useState("EUR");
 
   return (

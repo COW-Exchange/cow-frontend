@@ -3,7 +3,7 @@ import { useState, useEffect, ReactElement } from "react";
 
 import Graph from "./Graph";
 import Description from "./Description";
-type navProps = {
+type mainProps = {
   timeframe: { from: string; to: string };
   timeSelect: string;
   baseCurrency: string;
@@ -15,7 +15,7 @@ export default function Main({
   timeSelect,
   baseCurrency,
   setCurrencies,
-}: navProps) {
+}: mainProps) {
   const [exchangeRates, setExchangeRates] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [display, setDisplay] = useState<ReactElement>();
