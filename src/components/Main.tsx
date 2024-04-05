@@ -23,7 +23,7 @@ export default function Main({
 
   useEffect(() => {
     axios
-      .get(`${url}/exchange-rate/${timeframe.from}/${timeframe.to}/`)
+      .get(`/exchange-rate/${timeframe.from}/${timeframe.to}/`)
       .then((result) => {
         setExchangeRates(result.data.rates);
       })

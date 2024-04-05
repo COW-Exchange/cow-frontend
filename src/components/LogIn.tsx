@@ -33,7 +33,7 @@ export default function LogIn() {
         <button
           onClick={() =>
             axios
-              .post(url + "/users/login", {
+              .post("/users/login", {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value,
                 withCredentials: true,
