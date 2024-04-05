@@ -8,6 +8,7 @@ import Main from "./components/Main";
 import Privacy from "./components/Privacy";
 import Register from "./components/Register";
 import LogIn from "./components/LogIn";
+import Profile from "./components/Profile";
 
 function convertDate(date: Date) {
   const mm = date.getMonth() + 1; // getMonth() is zero-based
@@ -58,6 +59,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LogIn />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </div>
     </div>

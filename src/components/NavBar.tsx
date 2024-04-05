@@ -73,6 +73,7 @@ export default function NavBar({
           <a href="/privacy">Privacy</a>
           <a href="/register">Register</a>
           <a href="/login">Log in</a>
+          <a href="/profile">Profile</a>
         </div>
       </div>
     </div>

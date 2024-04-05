@@ -36,8 +36,11 @@ export default function LogIn() {
               .post(url + "/users/login", {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value,
+                withCredentials: true,
               })
-              .then((res) => setMessage(<p>{res.data.message}</p>))
+              .then((res) => {
+                setMessage(<p>{res.data.message}</p>);
+              })
               .catch((e) => {
                 setMessage(<p>{e.message}</p>);
               })
