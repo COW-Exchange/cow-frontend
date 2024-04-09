@@ -7,7 +7,7 @@ type mainProps = {
   timeframe: { from: string; to: string };
   timeSelect: string;
   baseCurrency: string;
-  setCurrencies: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  setCurrencies: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export default function Main({
@@ -19,11 +19,12 @@ export default function Main({
   const [exchangeRates, setExchangeRates] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [display, setDisplay] = useState<ReactElement>();
-  const url = process.env.REACT_APP_URL;
+  const url =
+    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
 
   useEffect(() => {
     axios
-      .get(`/exchange-rate/${timeframe.from}/${timeframe.to}/`)
+      .get(url + `/exchange-rate/${timeframe.from}/${timeframe.to}/`)
       .then((result) => {
         setExchangeRates(result.data.rates);
       })

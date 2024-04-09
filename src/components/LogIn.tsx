@@ -1,9 +1,11 @@
 import { useRef, useState, ReactElement } from "react";
 import axios from "axios";
-
-const url = process.env.REACT_APP_URL;
+import { useNavigate } from "react-router-dom";
 
 export default function LogIn() {
+  const url =
+    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
+  const navigate = useNavigate();
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<ReactElement>();
@@ -33,13 +35,14 @@ export default function LogIn() {
         <button
           onClick={() =>
             axios
-              .post("/users/login", {
+              .post(url + "/users/login", {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value,
                 withCredentials: true,
               })
               .then((res) => {
                 setMessage(<p>{res.data.message}</p>);
+                navigate("/profile");
               })
               .catch((e) => {
                 setMessage(<p>{e.message}</p>);

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
 
 import "./App.css";
 
@@ -21,7 +22,10 @@ function convertDate(date: Date) {
 }
 
 function App() {
-  const [currencies, setCurrencies] = useState<string[]>();
+  const url =
+    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
+
+  const [currencies, setCurrencies] = useState<string[]>([]);
   const [timeframe, setTimeframe] = useState<{ from: string; to: string }>({
     from: convertDate(
       new Date(new Date().getTime() - 60 * 60 * 24 * 30 * 1000)
@@ -30,6 +34,12 @@ function App() {
   });
   const [timeSelect, setTimeSelect] = useState("month");
   const [baseCurrency, setBaseCurrency] = useState("EUR");
+  useEffect(() => {
+    axios
+      .get(url + "/exchange-rate/currencies")
+      .then((res) => setCurrencies(res.data.currencies))
+      .catch((e) => console.log(e));
+  }, [url]);
 
   return (
     <div className="tile" key={"tile"}>
@@ -59,7 +69,10 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<LogIn />} />
-          <Route path="/profile" element={<Profile />} />
+          <Route
+            path="/profile"
+            element={<Profile currencies={currencies} />}
+          />
         </Routes>
       </div>
     </div>
