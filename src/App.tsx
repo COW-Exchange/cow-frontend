@@ -11,6 +11,15 @@ import Register from "./components/Register";
 import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
 
+export interface UserData {
+  _id: string;
+  id: string;
+  selectedCurrencies: {};
+  ownCurrencies: {};
+  baseCurrency: string;
+  timeFrame: number;
+}
+
 function convertDate(date: Date) {
   const mm = date.getMonth() + 1; // getMonth() is zero-based
   const dd = date.getDate();
@@ -23,8 +32,10 @@ function convertDate(date: Date) {
 
 function App() {
   const url =
-    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
-
+    process.env.NODE_ENV === "development"
+      ? ""
+      : (process.env.REACT_APP_URL as string);
+  const [userData, setUserData] = useState<Partial<UserData>>({});
   const [currencies, setCurrencies] = useState<string[]>([]);
   const [timeframe, setTimeframe] = useState<{ from: string; to: string }>({
     from: convertDate(
@@ -68,10 +79,17 @@ function App() {
           />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<LogIn />} />
+          <Route path="/login" element={<LogIn url={url} />} />
           <Route
             path="/profile"
-            element={<Profile currencies={currencies} />}
+            element={
+              <Profile
+                currencies={currencies}
+                userData={userData}
+                setUserData={setUserData}
+                url={url}
+              />
+            }
           />
         </Routes>
       </div>

@@ -1,47 +1,56 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
-type profileProps = { currencies: string[] };
+import { UserData } from "../App";
 
-export default function Profile({ currencies }: profileProps) {
-  const url =
-    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
-  const [userData, setUserData] = useState({
-    _id: "",
-    id: "",
-    selectedCurrencies: {},
-    ownCurrencies: {},
-    baseCurrency: "EUR",
-  });
+type profileProps = {
+  currencies: string[];
+  userData: Partial<UserData>;
+  setUserData: React.Dispatch<React.SetStateAction<Partial<UserData>>>;
+  url: string;
+};
+
+export default function Profile({
+  currencies,
+  userData,
+  setUserData,
+  url,
+}: profileProps) {
   useEffect(() => {
-    try {
-      axios
-        .get(url + "/users/profile", { withCredentials: true })
-        .then((res) => setUserData(res.data.user));
-    } catch (e) {
-      console.log(e);
-    }
+    axios
+      .get(url + "/users/profile", { withCredentials: true })
+      .then((res) => setUserData(res.data.user))
+      .catch((e) => console.log(e));
   }, [url, setUserData]);
 
-  return (
-    <div>
-      Base currency:{" "}
-      <select
-        name="baseSelect"
-        id="base-select"
-        value={userData.baseCurrency}
-        onChange={(e) => {
-          setUserData({ ...userData, baseCurrency: e.target.value });
-        }}
-      >
-        <option value="EUR">EUR</option>
+  useEffect(() => {
+    axios
+      .put(url + "/users/settings", { user: userData })
+      .then((res) => console.log(res.data.message))
+      .catch((e) => console.log(e));
+  }, [url, userData]);
 
-        {currencies?.map((currency) => (
-          <option value={currency} key={currency}>
-            {currency}
-          </option>
-        ))}
-      </select>
+  return (
+    <div className="formbox">
+      <div className="dropdown">
+        Base currency:{" "}
+        <select
+          name="baseSelect"
+          id="base-select"
+          value={userData.baseCurrency}
+          onChange={(e) => {
+            setUserData({ ...userData, baseCurrency: e.target.value });
+          }}
+        >
+          <option value="EUR">EUR</option>
+
+          {currencies?.map((currency) => (
+            <option value={currency} key={currency}>
+              {currency}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 }

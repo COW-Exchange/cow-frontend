@@ -2,9 +2,7 @@ import { useRef, useState, ReactElement } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function LogIn() {
-  const url =
-    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
+export default function LogIn({ url }: { url: string }) {
   const navigate = useNavigate();
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
