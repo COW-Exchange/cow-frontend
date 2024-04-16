@@ -1,13 +1,14 @@
-import { useRef, useState, ReactElement } from "react";
+import React, { useRef, useState, ReactElement } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
-export default function LogIn({ url }: { url: string }) {
-  const navigate = useNavigate();
+interface loginProps {
+  url: string;
+}
+
+export default function LogIn({ url }: loginProps) {
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<ReactElement>();
-
   return (
     <div className="register">
       <div className="formbox">
@@ -31,7 +32,7 @@ export default function LogIn({ url }: { url: string }) {
           />
         </div>
         <button
-          onClick={() =>
+          onClick={() => {
             axios
               .post(url + "/users/login", {
                 email: emailRef.current?.value,
@@ -40,12 +41,12 @@ export default function LogIn({ url }: { url: string }) {
               })
               .then((res) => {
                 setMessage(<p>{res.data.message}</p>);
-                navigate("/profile");
+                localStorage.setItem("logged", "in");
               })
               .catch((e) => {
                 setMessage(<p>{e.message}</p>);
-              })
-          }
+              });
+          }}
         >
           Log in
         </button>

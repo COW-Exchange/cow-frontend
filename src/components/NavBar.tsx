@@ -2,8 +2,9 @@ import logo from "../images/cow_logo_01.png";
 import { sloganArray } from "../texts";
 import { useMemo, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Dropdowns from "./Dropdowns";
+import { logOut } from "../App";
 type navProps = {
   timeframe: { from: string; to: string };
   setTimeframe: React.Dispatch<
@@ -30,6 +31,7 @@ export default function NavBar({
   setBaseCurrency,
   currencies,
 }: navProps) {
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState<Boolean>(false);
   const slogan = useMemo(
     () => sloganArray[Math.floor(Math.random() * sloganArray.length)],
@@ -72,8 +74,22 @@ export default function NavBar({
           <a href="/">Home</a>
           <a href="/privacy">Privacy</a>
           <a href="/register">Register</a>
-          <a href="/login">Log in</a>
-          <a href="/profile">Profile</a>
+          {localStorage.getItem("logged") === "in" ? (
+            <div>
+              <a href="/profile">Profile</a>
+              <button
+                onClick={() => {
+                  logOut();
+                  localStorage.setItem("logged", "out");
+                  navigate("/");
+                }}
+              >
+                Log out
+              </button>
+            </div>
+          ) : (
+            <a href="/login">Log in</a>
+          )}
         </div>
       </div>
     </div>

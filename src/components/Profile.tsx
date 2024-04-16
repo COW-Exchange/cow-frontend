@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect } from "react";
-
 import { UserData } from "../App";
 
 type profileProps = {
@@ -26,10 +25,9 @@ export default function Profile({
   useEffect(() => {
     axios
       .put(url + "/users/settings", { user: userData })
-      .then((res) => console.log(res.data.message))
+      .then((res) => {})
       .catch((e) => console.log(e));
   }, [url, userData]);
-
   return (
     <div className="formbox">
       <div className="dropdown">

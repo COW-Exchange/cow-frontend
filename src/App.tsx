@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
 import "./App.css";
@@ -10,6 +10,7 @@ import Privacy from "./components/Privacy";
 import Register from "./components/Register";
 import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
 
 export interface UserData {
   _id: string;
@@ -18,6 +19,17 @@ export interface UserData {
   ownCurrencies: {};
   baseCurrency: string;
   timeFrame: number;
+}
+export const url =
+  process.env.NODE_ENV === "development"
+    ? ""
+    : (process.env.REACT_APP_URL as string);
+
+export function logOut() {
+  axios
+    .post(url + "/users/logout")
+    .then((res) => console.log(res.data.message))
+    .catch((e) => console.log(e));
 }
 
 function convertDate(date: Date) {
@@ -31,10 +43,6 @@ function convertDate(date: Date) {
 }
 
 function App() {
-  const url =
-    process.env.NODE_ENV === "development"
-      ? ""
-      : (process.env.REACT_APP_URL as string);
   const [userData, setUserData] = useState<Partial<UserData>>({});
   const [currencies, setCurrencies] = useState<string[]>([]);
   const [timeframe, setTimeframe] = useState<{ from: string; to: string }>({
@@ -50,7 +58,7 @@ function App() {
       .get(url + "/exchange-rate/currencies")
       .then((res) => setCurrencies(res.data.currencies))
       .catch((e) => console.log(e));
-  }, [url]);
+  }, []);
 
   return (
     <div className="tile" key={"tile"}>
@@ -68,6 +76,7 @@ function App() {
         <Routes>
           <Route
             path="/"
+            index
             element={
               <Main
                 timeframe={timeframe}
@@ -83,14 +92,19 @@ function App() {
           <Route
             path="/profile"
             element={
-              <Profile
-                currencies={currencies}
-                userData={userData}
-                setUserData={setUserData}
-                url={url}
-              />
+              localStorage.getItem("logged") === "in" ? (
+                <Profile
+                  currencies={currencies}
+                  userData={userData}
+                  setUserData={setUserData}
+                  url={url}
+                />
+              ) : (
+                <Navigate to="/login" replace />
+              )
             }
           />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
