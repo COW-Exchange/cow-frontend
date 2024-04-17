@@ -24,30 +24,83 @@ export default function Profile({
 
   useEffect(() => {
     axios
-      .put(url + "/users/settings", { user: userData })
+      .put(url + "/users/settings", { withCredentials: true, user: userData })
       .then((res) => {})
       .catch((e) => console.log(e));
   }, [url, userData]);
   return (
-    <div className="formbox">
-      <div className="dropdown">
-        Base currency:{" "}
-        <select
-          name="baseSelect"
-          id="base-select"
-          value={userData.baseCurrency}
-          onChange={(e) => {
-            setUserData({ ...userData, baseCurrency: e.target.value });
-          }}
-        >
-          <option value="EUR">EUR</option>
+    <div className="profile">
+      <div className="formbox">
+        <div className="dropdown">
+          <h3>Base currency:</h3>
+          <select
+            name="baseSelect"
+            id="base-select"
+            value={userData.baseCurrency}
+            onChange={(e) => {
+              setUserData({ ...userData, baseCurrency: e.target.value });
+            }}
+          >
+            <option value="EUR">EUR</option>
 
-          {currencies?.map((currency) => (
-            <option value={currency} key={currency}>
-              {currency}
-            </option>
+            {currencies?.map((currency) => (
+              <option value={currency} key={currency}>
+                {currency}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      <div className="formbox">
+        <h3>Currencies you are interested in:</h3>
+        <div className="grid">
+          {currencies.map((currency) => (
+            <div className="checkbox" key={"selected" + currency}>
+              <span>{currency}</span>
+              <input
+                type="checkbox"
+                value={currency}
+                defaultChecked={userData.selectedCurrencies?.[currency]}
+                onChange={() =>
+                  setUserData({
+                    ...userData,
+                    selectedCurrencies: {
+                      ...userData.selectedCurrencies,
+                      [currency as keyof typeof userData.selectedCurrencies]:
+                        !userData.selectedCurrencies?.[currency],
+                    },
+                  })
+                }
+              />
+            </div>
           ))}
-        </select>
+        </div>
+      </div>
+      <div className="formbox">
+        <h3>Currencies you own:</h3>
+
+        <div className="grid">
+          {currencies.map((currency) => (
+            <div className="checkbox" key={"own" + currency}>
+              <span>{currency}</span>
+              <input
+                type="checkbox"
+                value={currency}
+                defaultChecked={userData.ownCurrencies?.[currency]}
+                onChange={() =>
+                  setUserData({
+                    ...userData,
+                    ownCurrencies: {
+                      ...userData.ownCurrencies,
+                      [currency as keyof typeof userData.ownCurrencies]:
+                        !userData.ownCurrencies?.[currency],
+                    },
+                  })
+                }
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

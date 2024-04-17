@@ -12,19 +12,30 @@ import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 
-export interface UserData {
-  _id: string;
-  id: string;
-  selectedCurrencies: {};
-  ownCurrencies: {};
-  baseCurrency: string;
-  timeFrame: number;
-}
 export const url =
   process.env.NODE_ENV === "development"
     ? ""
     : (process.env.REACT_APP_URL as string);
 
+//this needs to be cleaned up, no need to double call currencies from backend
+let exchangeSettings: { [key: string]: boolean } = {};
+axios
+  .get(url + "/exchange-rate/currencies")
+  .then((res) =>
+    res.data.currencies.forEach(
+      (currency: string) => (exchangeSettings[currency] = false)
+    )
+  )
+  .catch(() => console.log("error"));
+
+export interface UserData {
+  _id: string;
+  id: string;
+  selectedCurrencies: typeof exchangeSettings;
+  ownCurrencies: typeof exchangeSettings;
+  baseCurrency: string;
+  timeFrame: number;
+}
 export function logOut() {
   axios
     .post(url + "/users/logout")
@@ -59,7 +70,6 @@ function App() {
       .then((res) => setCurrencies(res.data.currencies))
       .catch((e) => console.log(e));
   }, []);
-
   return (
     <div className="tile" key={"tile"}>
       <div className="main" key={"main"}>
@@ -83,6 +93,7 @@ function App() {
                 timeSelect={timeSelect}
                 baseCurrency={baseCurrency}
                 setCurrencies={setCurrencies}
+                currencies={currencies}
               />
             }
           />
@@ -92,7 +103,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              localStorage.getItem("logged") === "in" ? (
+              Number(localStorage.logged) > Number(Date.now()) ? (
                 <Profile
                   currencies={currencies}
                   userData={userData}

@@ -118,8 +118,6 @@ export default function Dropdowns({
             setBaseCurrency(e.target.value);
           }}
         >
-          <option value="EUR">EUR</option>
-
           {currencies?.map((currency) => (
             <option value={currency} key={currency}>
               {currency}

@@ -8,6 +8,7 @@ type mainProps = {
   timeSelect: string;
   baseCurrency: string;
   setCurrencies: React.Dispatch<React.SetStateAction<string[]>>;
+  currencies: string[];
 };
 
 export default function Main({
@@ -15,6 +16,7 @@ export default function Main({
   timeSelect,
   baseCurrency,
   setCurrencies,
+  currencies,
 }: mainProps) {
   const [exchangeRates, setExchangeRates] = useState<any>();
   const [loading, setLoading] = useState(true);
@@ -37,19 +39,9 @@ export default function Main({
 
   useEffect(() => {
     if (exchangeRates) {
-      setCurrencies(
-        Object.keys(exchangeRates[0].rates).filter(
-          (currency) =>
-            currency !== "_id" &&
-            currency !== "HRK" &&
-            currency !== "RUB" &&
-            currency !== "BGN"
-        )
-      );
       setDisplay(
         <div>
-          {Object.keys(exchangeRates[0].rates).map((key) =>
-            key === "_id" ||
+          {currencies.map((key) =>
             key === "HRK" ||
             key === "RUB" ||
             key === "BGN" ||
@@ -83,7 +75,7 @@ export default function Main({
         </div>
       );
     }
-  }, [exchangeRates, baseCurrency, timeSelect, setCurrencies]);
+  }, [exchangeRates, baseCurrency, timeSelect, setCurrencies, currencies]);
 
   return <div> {loading ? <p>loading</p> : display}</div>;
 }

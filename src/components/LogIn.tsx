@@ -1,11 +1,13 @@
-import React, { useRef, useState, ReactElement } from "react";
+import { useRef, useState, ReactElement } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 
 interface loginProps {
   url: string;
 }
 
 export default function LogIn({ url }: loginProps) {
+  const navigate = useNavigate();
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<ReactElement>();
@@ -37,11 +39,14 @@ export default function LogIn({ url }: loginProps) {
               .post(url + "/users/login", {
                 email: emailRef.current?.value,
                 password: passwordRef.current?.value,
-                withCredentials: true,
               })
               .then((res) => {
                 setMessage(<p>{res.data.message}</p>);
-                localStorage.setItem("logged", "in");
+                localStorage.setItem(
+                  "logged",
+                  (Date.now() + 3540000).toString()
+                );
+                navigate("/profile");
               })
               .catch((e) => {
                 setMessage(<p>{e.message}</p>);

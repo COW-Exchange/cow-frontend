@@ -96,6 +96,12 @@ body {
   align-self: center;
   padding: 1%;
 }
+.profile {
+  width: 100vw;
+  min-height: 100vh;
+  align-self: center;
+  padding: 5%;
+}
 .menudropdown {
   background-color: rgb(144, 170, 184);
   min-width: 100px;
@@ -105,7 +111,10 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+.menudropdown div {
+  display: flex;
+  flex-direction: column;
+}
 .register {
   height: 80vh;
   display: flex;
@@ -133,6 +142,17 @@ body {
   width: 75%;
   margin: 1vw;
 }
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding-bottom: 5%;
+}
+.checkbox {
+  display: flex;
+  min-width: fit-content;
+  justify-content: space-between;
+  padding-right: 2vw;
+}
 @media (max-width: 999px) {
   .container {
     grid-template-columns: 85vw;
@@ -143,6 +163,9 @@ body {
   }
   .menuicon {
     font-size: 7vh;
+  }
+  .formbox {
+    width: 90vw;
   }
 }
 @media (max-height: 900px) {

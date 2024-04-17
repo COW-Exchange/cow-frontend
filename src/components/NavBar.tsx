@@ -73,8 +73,7 @@ export default function NavBar({
         >
           <a href="/">Home</a>
           <a href="/privacy">Privacy</a>
-          <a href="/register">Register</a>
-          {localStorage.getItem("logged") === "in" ? (
+          {Number(localStorage.logged) > Number(Date.now()) ? (
             <div>
               <a href="/profile">Profile</a>
               <button
@@ -88,7 +87,10 @@ export default function NavBar({
               </button>
             </div>
           ) : (
-            <a href="/login">Log in</a>
+            <div>
+              <a href="/register">Register</a>
+              <a href="/login">Log in</a>
+            </div>
           )}
         </div>
       </div>
