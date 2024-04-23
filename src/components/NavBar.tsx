@@ -59,7 +59,7 @@ export default function NavBar({
       )}
 
       <div id="slogan" key={"slogan"}>
-        <span>{slogan}</span>
+        <p>{slogan}</p>
       </div>
       <div
         id="menu"

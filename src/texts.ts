@@ -1,4 +1,5 @@
 export const currencies = {
+  EUR: "Euro",
   USD: "United States Dollar",
   JPY: "Japanese Yen",
   BGN: "Bulgarian Lev",
@@ -33,6 +34,7 @@ export const currencies = {
   ZAR: "South African Rand",
 };
 export const currencyDescriptions = {
+  EUR: "The Euro (€) symbolizes European integration and economic strength, used by 20 of the 27 European Union (EU) member states. Established in 1999, it streamlines cross-border transactions, reducing exchange rate risks. As the world's second-most held reserve currency, it boosts trade, lowers transaction costs, enhances price transparency, and attracts foreign investments. Challenges like economic disparities persist, but ongoing integration efforts suggest a promising future for the Euro. It remains a symbol of unity, playing a vital role in Europe's economic stability and global prominence.",
   USD: "The United States Dollar (USD) is the world’s primary reserve currency, widely used in international trade and finance. Renowned for its stability and liquidity, the USD is a benchmark for global economic transactions. It holds a central role in the global financial system, serving as the preferred currency for international reserves, commodities, and trade agreements. The strength of the U.S. economy significantly influences the value of the USD, making it a crucial indicator in global financial markets.",
   JPY: "The Japanese Yen (JPY) is Japan’s official currency, renowned for its stability. The Yen is a key player in the foreign exchange market and is considered a safe-haven currency. Japan's economic strength, technological innovation, and global trade contribute to the Yen’s status as a major international currency. The Bank of Japan plays a pivotal role in managing the Yen's value and ensuring economic stability within the country.",
   BGN: "The Bulgarian Lev (BGN) is Bulgaria’s official currency and has been part of the European Union since 2007. As a member of the EU, the Lev is integral to Bulgaria’s economic interactions within the European market. Bulgaria's economic development, coupled with its strategic location in Southeast Europe, contributes to the Lev's role as a key currency in the region.",

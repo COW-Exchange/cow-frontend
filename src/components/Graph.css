@@ -12,15 +12,18 @@
 .value,
 .date {
   display: none;
+  position: absolute;
+  background-color: rgba(212, 217, 190, 0.8);
+  color: rgba(48, 51, 32, 1);
+  font-weight: bold;
+  z-index: 3;
+  padding: 2px;
 }
 .column:hover span {
   display: unset;
-  background-color: rgba(212, 217, 190, 0.8);
-  color: rgba(48, 51, 32, 1);
-  padding: 2px;
-  margin: 2px;
-  font-weight: bold;
-  z-index: 2;
+}
+.column:hover img {
+  width: 120%;
 }
 .column {
   display: flex;
@@ -29,21 +32,19 @@
   max-width: 3%;
   position: relative;
   margin-left: -1vw;
-  z-index: 1;
+  align-items: center;
 }
 .column-value {
+  display: flex;
   width: 100%;
   overflow: visible;
   white-space: nowrap;
   position: absolute;
   bottom: 0px;
-  display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-}
-.value {
-  white-space: nowrap;
+  z-index: 2;
 }
 .column-label {
   overflow: visible;
@@ -52,11 +53,14 @@
   flex-direction: column;
   justify-content: flex-end;
 }
-.column-label img {
+.value {
+  white-space: nowrap;
+}
+.HQdot,
+.dot {
   width: 100%;
   bottom: 0px;
   left: 0;
-  /* min-width: 3px; */
 }
 .legend-container {
   position: absolute;
@@ -64,11 +68,13 @@
   bottom: 0;
   width: 100%;
   height: 100%;
+  z-index: -1;
 }
 .relative-legend-container {
   position: relative;
   width: 100%;
   height: 100%;
+  z-index: -1;
 }
 .relative {
   position: relative;
@@ -76,7 +82,6 @@
 .underline {
   border-bottom: 2px dotted rgb(41, 58, 10);
   width: 100%;
-  z-index: 0;
 }
 .median {
   position: absolute;

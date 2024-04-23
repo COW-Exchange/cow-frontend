@@ -25,16 +25,20 @@ export default function Main({
     process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
 
   useEffect(() => {
-    axios
-      .get(url + `/exchange-rate/${timeframe.from}/${timeframe.to}/`)
-      .then((result) => {
-        setExchangeRates(result.data.rates);
-      })
-      .catch((error) => {
-        console.error(error);
-        throw error;
-      })
-      .finally(() => setLoading(false));
+    try {
+      axios
+        .get(url + `/exchange-rate/${timeframe.from}/${timeframe.to}/`)
+        .then((result) => {
+          setExchangeRates(result.data.rates);
+        })
+        .catch((error) => {
+          console.error(error);
+          throw error;
+        })
+        .finally(() => setLoading(false));
+    } catch (e) {
+      console.log(e);
+    }
   }, [timeframe, url]);
 
   useEffect(() => {
@@ -61,6 +65,10 @@ export default function Main({
                         rate:
                           baseCurrency === "EUR"
                             ? 1 / item.rates[key as keyof typeof item.rates]
+                            : key === "EUR"
+                            ? item.rates[
+                                baseCurrency as keyof typeof item.rates
+                              ]
                             : item.rates[
                                 baseCurrency as keyof typeof item.rates
                               ] / item.rates[key as keyof typeof item.rates],

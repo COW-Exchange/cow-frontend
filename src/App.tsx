@@ -17,22 +17,11 @@ export const url =
     ? ""
     : (process.env.REACT_APP_URL as string);
 
-//this needs to be cleaned up, no need to double call currencies from backend
-let exchangeSettings: { [key: string]: boolean } = {};
-axios
-  .get(url + "/exchange-rate/currencies")
-  .then((res) =>
-    res.data.currencies.forEach(
-      (currency: string) => (exchangeSettings[currency] = false)
-    )
-  )
-  .catch(() => console.log("error"));
-
 export interface UserData {
   _id: string;
   id: string;
-  selectedCurrencies: typeof exchangeSettings;
-  ownCurrencies: typeof exchangeSettings;
+  selectedCurrencies: { [key: string]: boolean };
+  ownCurrencies: { [key: string]: boolean };
   baseCurrency: string;
   timeFrame: number;
 }
@@ -99,7 +88,21 @@ function App() {
           />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<LogIn url={url} />} />
+          <Route
+            path="/login"
+            element={
+              Number(localStorage.logged) > Number(Date.now()) ? (
+                <Profile
+                  currencies={currencies}
+                  userData={userData}
+                  setUserData={setUserData}
+                  url={url}
+                />
+              ) : (
+                <LogIn url={url} />
+              )
+            }
+          />
           <Route
             path="/profile"
             element={

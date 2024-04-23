@@ -41,10 +41,8 @@ export default function Profile({
               setUserData({ ...userData, baseCurrency: e.target.value });
             }}
           >
-            <option value="EUR">EUR</option>
-
             {currencies?.map((currency) => (
-              <option value={currency} key={currency}>
+              <option value={currency} key={currency} id={"dd" + currency}>
                 {currency}
               </option>
             ))}
@@ -60,6 +58,7 @@ export default function Profile({
               <input
                 type="checkbox"
                 value={currency}
+                id={"select" + currency}
                 defaultChecked={userData.selectedCurrencies?.[currency]}
                 onChange={() =>
                   setUserData({
@@ -86,6 +85,7 @@ export default function Profile({
               <input
                 type="checkbox"
                 value={currency}
+                id={"own" + currency}
                 defaultChecked={userData.ownCurrencies?.[currency]}
                 onChange={() =>
                   setUserData({

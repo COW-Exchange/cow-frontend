@@ -1,4 +1,4 @@
-import { useRef, useState, ReactElement } from "react";
+import { useRef, useState, ReactElement, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
@@ -8,6 +8,11 @@ interface loginProps {
 
 export default function LogIn({ url }: loginProps) {
   const navigate = useNavigate();
+  useEffect(() => {
+    if (Number(localStorage.logged) > Number(Date.now())) {
+      navigate("../profile", { replace: true });
+    }
+  }, [navigate]);
   const passwordRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState<ReactElement>();
@@ -46,7 +51,7 @@ export default function LogIn({ url }: loginProps) {
                   "logged",
                   (Date.now() + 3540000).toString()
                 );
-                navigate("/profile");
+                window.location.reload();
               })
               .catch((e) => {
                 setMessage(<p>{e.message}</p>);

@@ -46,6 +46,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 .container {
   display: grid;
@@ -77,6 +78,7 @@ body {
   justify-items: center;
   padding: 0% 5%;
   font-weight: bold;
+  width: 30vw;
 }
 #menu {
   padding: 2vw;
@@ -97,10 +99,11 @@ body {
   padding: 1%;
 }
 .profile {
-  width: 100vw;
+  width: 100%;
   min-height: 100vh;
   align-self: center;
-  padding: 5%;
+  display: grid;
+  grid-template-columns: auto auto;
 }
 .menudropdown {
   background-color: rgb(144, 170, 184);
@@ -121,7 +124,7 @@ body {
   justify-content: space-around;
 }
 .formbox {
-  width: 45vw;
+  width: 40vw;
   background-color: rgba(144, 170, 184, 0.8);
   margin: 2.5vw;
   padding: 2vw;
@@ -163,6 +166,9 @@ body {
   }
   .menuicon {
     font-size: 7vh;
+  }
+  .profile {
+    grid-template-columns: auto;
   }
   .formbox {
     width: 90vw;

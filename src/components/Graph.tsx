@@ -90,6 +90,21 @@ export default function Graph({
         </div>
         {dateRates.map((dayRate) => (
           <div className="column" key={currency + dayRate.date}>
+            <span className="value">
+              {getBaseLog(10, dayRate.rate) < -2 ? (
+                <span>
+                  {dayRate.rate.toExponential().toString().slice(0, 6)} · 10
+                  <sup>
+                    {dayRate.rate.toExponential().toString().slice(-2)}
+                  </sup>{" "}
+                  {baseCurrency}
+                </span>
+              ) : (
+                <span>
+                  {Math.round(dayRate.rate * 100000) / 100000} {baseCurrency}
+                </span>
+              )}
+            </span>
             <div
               className="column-label"
               style={{
@@ -100,19 +115,6 @@ export default function Graph({
                   ).toString() + "%",
               }}
             >
-              <span className="value">
-                {getBaseLog(10, dayRate.rate) < -2 ? (
-                  <span>
-                    {dayRate.rate.toExponential().toString().slice(0, 6)} · 10
-                    <sup>
-                      {dayRate.rate.toExponential().toString().slice(-2)}
-                    </sup>
-                  </span>
-                ) : (
-                  Math.round(dayRate.rate * 100000) / 100000
-                )}{" "}
-                {baseCurrency}
-              </span>
               <img
                 className={
                   timeSelect === "week" || timeSelect === "month"
