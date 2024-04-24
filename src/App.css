@@ -103,7 +103,22 @@ body {
   min-height: 100vh;
   align-self: center;
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template:
+    "base base"
+    "own interest"
+    "foot foot";
+}
+#base {
+  grid-area: base;
+}
+#interest {
+  grid-area: interest;
+}
+#own {
+  grid-area: own;
+}
+#foot {
+  grid-area: foot;
 }
 .menudropdown {
   background-color: rgb(144, 170, 184);
@@ -124,7 +139,7 @@ body {
   justify-content: space-around;
 }
 .formbox {
-  width: 40vw;
+  /* min-width: 40vw; */
   background-color: rgba(144, 170, 184, 0.8);
   margin: 2.5vw;
   padding: 2vw;
@@ -168,7 +183,11 @@ body {
     font-size: 7vh;
   }
   .profile {
-    grid-template-columns: auto;
+    grid-template:
+      "base"
+      "own"
+      "interest"
+      "foot";
   }
   .formbox {
     width: 90vw;

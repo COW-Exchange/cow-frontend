@@ -54,7 +54,7 @@ export default function LogIn({ url }: loginProps) {
                 window.location.reload();
               })
               .catch((e) => {
-                setMessage(<p>{e.message}</p>);
+                setMessage(<p>{e.response.data.error}</p>);
               });
           }}
         >

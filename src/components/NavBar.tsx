@@ -79,8 +79,6 @@ export default function NavBar({
               <button
                 onClick={() => {
                   logOut();
-                  localStorage.setItem("logged", "out");
-                  navigate("/");
                 }}
               >
                 Log out

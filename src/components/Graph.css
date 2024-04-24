@@ -23,7 +23,7 @@
   display: unset;
 }
 .column:hover img {
-  width: 120%;
+  width: 130%;
 }
 .column {
   display: flex;
@@ -106,4 +106,15 @@ max {
   margin: 0;
   padding: 0;
   height: 0;
+}
+@media (max-width: 999px) {
+  .HQdot,
+  .dot {
+    width: 150%;
+    bottom: 0px;
+    left: 0;
+  }
+  .column:hover img {
+    width: 200%;
+  }
 }

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { UserData } from "../App";
+import { logOut } from "../App";
 
 type profileProps = {
   currencies: string[];
@@ -30,7 +31,7 @@ export default function Profile({
   }, [url, userData]);
   return (
     <div className="profile">
-      <div className="formbox">
+      <div id="base" className="formbox">
         <div className="dropdown">
           <h3>Base currency:</h3>
           <select
@@ -49,7 +50,7 @@ export default function Profile({
           </select>
         </div>
       </div>
-      <div className="formbox">
+      <div id="interest" className="formbox">
         <h3>Currencies you are interested in:</h3>
         <div className="grid">
           {currencies.map((currency) => (
@@ -75,7 +76,7 @@ export default function Profile({
           ))}
         </div>
       </div>
-      <div className="formbox">
+      <div id="own" className="formbox">
         <h3>Currencies you own:</h3>
 
         <div className="grid">
@@ -101,6 +102,9 @@ export default function Profile({
             </div>
           ))}
         </div>
+      </div>
+      <div id="foot" className="formbox">
+        <button onClick={() => logOut()}>Log Out</button>
       </div>
     </div>
   );

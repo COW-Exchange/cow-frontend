@@ -30,6 +30,8 @@ export function logOut() {
     .post(url + "/users/logout")
     .then((res) => console.log(res.data.message))
     .catch((e) => console.log(e));
+  localStorage.setItem("logged", "out");
+  window.location.reload();
 }
 
 function convertDate(date: Date) {
