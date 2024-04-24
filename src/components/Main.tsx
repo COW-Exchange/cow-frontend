@@ -3,11 +3,12 @@ import { useState, useEffect, ReactElement } from "react";
 
 import Graph from "./Graph";
 import Description from "./Description";
-type navProps = {
+type mainProps = {
   timeframe: { from: string; to: string };
   timeSelect: string;
   baseCurrency: string;
-  setCurrencies: React.Dispatch<React.SetStateAction<string[] | undefined>>;
+  setCurrencies: React.Dispatch<React.SetStateAction<string[]>>;
+  currencies: string[];
 };
 
 export default function Main({
@@ -15,40 +16,36 @@ export default function Main({
   timeSelect,
   baseCurrency,
   setCurrencies,
-}: navProps) {
+  currencies,
+}: mainProps) {
   const [exchangeRates, setExchangeRates] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [display, setDisplay] = useState<ReactElement>();
-  const url = process.env.REACT_APP_URL;
+  const url =
+    process.env.NODE_ENV === "development" ? "" : process.env.REACT_APP_URL;
 
   useEffect(() => {
-    axios
-      .get(`${url}/exchange-rate/${timeframe.from}/${timeframe.to}/`)
-      .then((result) => {
-        setExchangeRates(result.data.rates);
-      })
-      .catch((error) => {
-        console.error(error);
-        throw error;
-      })
-      .finally(() => setLoading(false));
+    try {
+      axios
+        .get(url + `/exchange-rate/${timeframe.from}/${timeframe.to}/`)
+        .then((result) => {
+          setExchangeRates(result.data.rates);
+        })
+        .catch((error) => {
+          console.error(error);
+          throw error;
+        })
+        .finally(() => setLoading(false));
+    } catch (e) {
+      console.log(e);
+    }
   }, [timeframe, url]);
 
   useEffect(() => {
     if (exchangeRates) {
-      setCurrencies(
-        Object.keys(exchangeRates[0].rates).filter(
-          (currency) =>
-            currency !== "_id" &&
-            currency !== "HRK" &&
-            currency !== "RUB" &&
-            currency !== "BGN"
-        )
-      );
       setDisplay(
         <div>
-          {Object.keys(exchangeRates[0].rates).map((key) =>
-            key === "_id" ||
+          {currencies.map((key) =>
             key === "HRK" ||
             key === "RUB" ||
             key === "BGN" ||
@@ -68,6 +65,10 @@ export default function Main({
                         rate:
                           baseCurrency === "EUR"
                             ? 1 / item.rates[key as keyof typeof item.rates]
+                            : key === "EUR"
+                            ? item.rates[
+                                baseCurrency as keyof typeof item.rates
+                              ]
                             : item.rates[
                                 baseCurrency as keyof typeof item.rates
                               ] / item.rates[key as keyof typeof item.rates],
@@ -82,7 +83,7 @@ export default function Main({
         </div>
       );
     }
-  }, [exchangeRates, baseCurrency, timeSelect, setCurrencies]);
+  }, [exchangeRates, baseCurrency, timeSelect, setCurrencies, currencies]);
 
   return <div> {loading ? <p>loading</p> : display}</div>;
 }

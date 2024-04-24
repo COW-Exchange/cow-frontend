@@ -46,6 +46,7 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 .container {
   display: grid;
@@ -59,11 +60,17 @@ body {
   padding: 5%;
   margin-top: 7vh;
   height: 35vh;
+  overflow: hidden;
 }
 .description h2 {
   padding: 0;
   margin: 0;
   margin-bottom: 2%;
+}
+.description p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 #slogan {
   display: flex;
@@ -71,15 +78,15 @@ body {
   justify-items: center;
   padding: 0% 5%;
   font-weight: bold;
+  width: 30vw;
 }
 #menu {
   padding: 2vw;
   overflow: visible;
 }
 .menuicon {
-  font-size: 5vw;
-  position: relative;
-  display: block;
+  font-size: 4vw;
+  margin: 2vw;
 }
 .menuicon:hover {
   color: rgb(48, 51, 32);
@@ -91,6 +98,28 @@ body {
   align-self: center;
   padding: 1%;
 }
+.profile {
+  width: 100%;
+  min-height: 100vh;
+  align-self: center;
+  display: grid;
+  grid-template:
+    "base base"
+    "own interest"
+    "foot foot";
+}
+#base {
+  grid-area: base;
+}
+#interest {
+  grid-area: interest;
+}
+#own {
+  grid-area: own;
+}
+#foot {
+  grid-area: foot;
+}
 .menudropdown {
   background-color: rgb(144, 170, 184);
   min-width: 100px;
@@ -100,14 +129,17 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+.menudropdown div {
+  display: flex;
+  flex-direction: column;
+}
 .register {
   height: 80vh;
   display: flex;
   justify-content: space-around;
 }
 .formbox {
-  width: 45vw;
+  /* min-width: 40vw; */
   background-color: rgba(144, 170, 184, 0.8);
   margin: 2.5vw;
   padding: 2vw;
@@ -118,9 +150,26 @@ body {
   align-items: center;
   justify-content: space-around;
 }
+.form {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
 .inputfield {
   width: 75%;
   margin: 1vw;
+}
+.grid {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding-bottom: 5%;
+}
+.checkbox {
+  display: flex;
+  min-width: fit-content;
+  justify-content: space-between;
+  padding-right: 2vw;
 }
 @media (max-width: 999px) {
   .container {
@@ -128,8 +177,39 @@ body {
   }
   .description {
     width: 85vw;
+    height: auto;
   }
   .menuicon {
     font-size: 7vh;
+  }
+  .profile {
+    grid-template:
+      "base"
+      "own"
+      "interest"
+      "foot";
+  }
+  .formbox {
+    width: 90vw;
+  }
+}
+@media (max-height: 900px) {
+  .description p {
+    -webkit-line-clamp: 9;
+  }
+}
+@media (max-height: 700px) {
+  .description p {
+    -webkit-line-clamp: 7;
+  }
+}
+@media (max-height: 500px) {
+  .description p {
+    -webkit-line-clamp: 4;
+  }
+}
+@media (max-height: 300px) {
+  .description p {
+    -webkit-line-clamp: 2;
   }
 }
