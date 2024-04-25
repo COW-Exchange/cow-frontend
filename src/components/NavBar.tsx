@@ -2,7 +2,7 @@ import logo from "../images/cow_logo_01.png";
 import { sloganArray } from "../texts";
 import { useMemo, useState } from "react";
 import { FiMoreVertical } from "react-icons/fi";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Dropdowns from "./Dropdowns";
 import { logOut } from "../App";
 type navProps = {
@@ -31,7 +31,6 @@ export default function NavBar({
   setBaseCurrency,
   currencies,
 }: navProps) {
-  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState<Boolean>(false);
   const slogan = useMemo(
     () => sloganArray[Math.floor(Math.random() * sloganArray.length)],
