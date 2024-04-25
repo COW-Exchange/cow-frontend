@@ -12,10 +12,7 @@ import LogIn from "./components/LogIn";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 
-export const url =
-  process.env.NODE_ENV === "development"
-    ? ""
-    : (process.env.REACT_APP_URL as string);
+export const url = process.env.REACT_APP_URL as string;
 
 export interface UserData {
   _id: string;
