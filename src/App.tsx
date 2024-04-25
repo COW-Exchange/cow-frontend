@@ -13,7 +13,6 @@ import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 
 export const url = process.env.REACT_APP_URL as string;
-console.log(process.env.NODE_ENV);
 
 export interface UserData {
   _id: string;
@@ -83,6 +82,7 @@ function App() {
                 baseCurrency={baseCurrency}
                 setCurrencies={setCurrencies}
                 currencies={currencies}
+                url={url}
               />
             }
           />
