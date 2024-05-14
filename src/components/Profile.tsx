@@ -18,14 +18,21 @@ export default function Profile({
 }: profileProps) {
   useEffect(() => {
     axios
-      .get(url + "/users/profile", { withCredentials: true })
+      .get(url + "/users/profile", {
+        withCredentials: true,
+        withXSRFToken: true,
+      })
       .then((res) => setUserData(res.data.user))
       .catch((e) => console.log(e));
   }, [url, setUserData]);
 
   useEffect(() => {
     axios
-      .put(url + "/users/settings", { withCredentials: true, user: userData })
+      .put(url + "/users/settings", {
+        withCredentials: true,
+        user: userData,
+        withXSRFToken: true,
+      })
       .then((res) => {})
       .catch((e) => console.log(e));
   }, [url, userData]);
