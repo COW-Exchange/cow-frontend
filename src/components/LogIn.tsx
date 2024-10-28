@@ -41,10 +41,14 @@ export default function LogIn({ url }: loginProps) {
         <button
           onClick={() => {
             axios
-              .post(url + "/users/login", {
-                email: emailRef.current?.value,
-                password: passwordRef.current?.value,
-              })
+              .post(
+                url + "/users/login",
+                {
+                  email: emailRef.current?.value,
+                  password: passwordRef.current?.value,
+                },
+                { withCredentials: true }
+              )
               .then((res) => {
                 setMessage(<p>{res.data.message}</p>);
                 localStorage.setItem(
