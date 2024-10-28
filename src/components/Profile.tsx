@@ -20,7 +20,7 @@ export default function Profile({
     axios
       .get(url + "/users/profile", {
         withCredentials: true,
-        withXSRFToken: true,
+        // withXSRFToken: true,
       })
       .then((res) => setUserData(res.data.user))
       .catch((e) => console.log(e));
@@ -31,7 +31,7 @@ export default function Profile({
       .put(url + "/users/settings", {
         withCredentials: true,
         user: userData,
-        withXSRFToken: true,
+        // withXSRFToken: true,
       })
       .then((res) => {})
       .catch((e) => console.log(e));
