@@ -28,11 +28,15 @@ export default function Profile({
 
   useEffect(() => {
     axios
-      .put(url + "/users/settings", {
-        withCredentials: true,
-        user: userData,
-        // withXSRFToken: true,
-      })
+      .put(
+        url + "/users/settings",
+        { user: userData },
+        {
+          withCredentials: true,
+
+          // withXSRFToken: true,
+        }
+      )
       .then((res) => {})
       .catch((e) => console.log(e));
   }, [url, userData]);
